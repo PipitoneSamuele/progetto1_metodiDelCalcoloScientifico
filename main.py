@@ -1,6 +1,6 @@
 from scipy.io import mmread
 
-a = mmread("resources//data//spa1.mtx")
+a = mmread("progetto1_metodiDelCalcoloScientifico\\resources\data\spa1.mtx")
 
 # x: vettore della soluzione esatta inizializzato a tutti 1
 x = [1] * len(a.A) 
