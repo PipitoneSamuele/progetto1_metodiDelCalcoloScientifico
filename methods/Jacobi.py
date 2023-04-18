@@ -1,5 +1,6 @@
 import utility.Constants as constants
 import utility.Matrix_operations as matrix_operations
+import numpy 
 
 # Partire da vettore nullo e arrestarsi se la k-esima iterata
 # soddisfa ||Ax^k-b||/||b|| < tol.
@@ -17,6 +18,9 @@ def jacobi(A, b, x, tol) :
     #   diagonale non deve avere valori nulli, in tal caso si potrebbe permutare A
 
     k = 1
+    D = numpy.diag(A)
+    R = A - numpy.diagflat(D)
     while(k <= constants.MAX_ITERATIONS) :
         k += 1
+        x = (b - numpy.dot(R, x))/D
     return None # Se ritorna None vuol dire che abbiamo superato il numero massimo di iterazioni consentite

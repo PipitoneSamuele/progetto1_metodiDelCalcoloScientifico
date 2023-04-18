@@ -7,3 +7,7 @@ def isDiagonalAllNonZero(A) :
         if(x == 0) :
             return False
     return True
+
+#TODO: metodo per calcolare l'errore relativo (e = x - x^k)
+def rel_error(e) :
+    return 0
