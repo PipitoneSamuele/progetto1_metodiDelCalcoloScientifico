@@ -6,7 +6,7 @@ import numpy
 # soddisfa ||Ax^k-b||/||b|| < tol.
 # Inoltre numero massimo di iterazioni maxIter (> 20000), altrimenti printiamo che non converge a soluzione
 def jacobi(A, b, x, tol) :
-
+    k = 0
     # Scrivere la matrice matrix come A = M - N, dove M è una matrice invertibile (con determinante non nullo)
     # allora la soluzione x di Ax = b risovle anche 
         # Mx = Nx+b
@@ -16,11 +16,38 @@ def jacobi(A, b, x, tol) :
     # Errore: misurabile con e^k = x^k - x Ovvero e^k = (M^-1 * N)^k * e^0
     # Tips: 
     #   diagonale non deve avere valori nulli, in tal caso si potrebbe permutare A
-
-    k = 1
-    D = numpy.diag(A)
-    R = A - numpy.diagflat(D)
-    while(k <= constants.MAX_ITERATIONS) :
+    # NB: @ è un operatore che serve per la moltiplicazione matriciale
+    while(k < tol) :
+        r = (A@x) - b
+        x = x + (getDiagMatrix(A) @ r)
         k += 1
-        x = (b - numpy.dot(R, x))/D
-    return None # Se ritorna None vuol dire che abbiamo superato il numero massimo di iterazioni consentite
+        #checka errore relativo
+        return x
+    return None #se ritorna none vuol dire che non converge
+
+#Metodo che ritorna una matrice con tutti 0 tranne la diagonale principale, assumo matrice quadrata
+def getDiagMatrix(A) :
+    for i in range(len(A)) :
+        for j in range(len(A[0])) :
+            if(i != j) :
+                A[i][j] = 0
+            else :
+                A[i][j] = 1/(A[i][j])
+    return A
+
+#Metodo che ritorna una matrice la cui diagonale sono tutti 0 e gli altri elementi sono invertiti di segno
+def getZeroDiagMatrix(A) :
+    for i in range(len(A)) :
+        for j in range(len(A[0])) :
+            if(i == j) :
+                A[i][j] = 0
+            else :
+                A[i][j] = -A[i][j]
+    return A
+
+def diagonalInvert(A) :
+    for i in range(len(A)) :
+        for j in range(len(A[0])) :
+            if(i == j) :
+                A[i][j] = 1/(A[i][j])
+    return A
