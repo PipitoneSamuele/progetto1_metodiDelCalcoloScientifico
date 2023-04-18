@@ -17,12 +17,13 @@ def jacobi(A, b, x, tol) :
     # Tips: 
     #   diagonale non deve avere valori nulli, in tal caso si potrebbe permutare A
     # NB: @ è un operatore che serve per la moltiplicazione matriciale
-    while(k < tol) :
+    while(k < constants.MAX_ITERATIONS_TEST) :
         r = (A@x) - b
         x = x + (getDiagMatrix(A) @ r)
         k += 1
-        #checka errore relativo
         return x
+        #if(checkError(A, x, b, tol)) :
+        #    return x
     return None #se ritorna none vuol dire che non converge
 
 #Metodo che ritorna una matrice con tutti 0 tranne la diagonale principale, assumo matrice quadrata
@@ -51,3 +52,9 @@ def diagonalInvert(A) :
             if(i == j) :
                 A[i][j] = 1/(A[i][j])
     return A
+
+def checkError(A, x, b, tol) :
+    if(numpy.divide(numpy.linalg.norm((A@x)-b), numpy.linalg.norm(b)) < tol) : 
+        return True
+    else :
+        return False
