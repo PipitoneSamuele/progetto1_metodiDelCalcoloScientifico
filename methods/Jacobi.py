@@ -1,5 +1,3 @@
-import utility.Constants as constants
-import utility.Matrix_operations as matrix_operations
 import numpy 
 
 # Partire da vettore nullo e arrestarsi se la k-esima iterata
@@ -7,16 +5,14 @@ import numpy
 # Inoltre numero massimo di iterazioni maxIter (> 20000), altrimenti printiamo che non converge a soluzione
     # NB: @ è un operatore che serve per la moltiplicazione matriciale
 def jacobi(A, b, x, tol) :
-        for i in range(constants.MAX_ITERATIONS_TEST) :
+        for i in range(25) :
             D = getDiagonalMatrix(A)
-            #print("D: ", D)
             Dm = invertedDiagonalMatrix(D)
-            #print("D inverted: ", Dm)
             R = getZeroDiagMatrix(A)
-            #print("R", R)
-            #print("x before: ", x)
-            x = Dm @ (b - (R@x))
-            print("x after: ", x)
+            T = Dm @ R
+            C = Dm @ b
+            x = (T @ x) + C
+            print("x generation ",i, " is: ", x)
         """
     k = 0
     while(k < constants.MAX_ITERATIONS_TEST) :
