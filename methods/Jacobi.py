@@ -12,18 +12,11 @@ def jacobi(A, b, x, tol) :
             T = Dm @ R
             C = Dm @ b
             x = (T @ x) + C
-            print("x generation ",i, " is: ", x)
-        """
-    k = 0
-    while(k < constants.MAX_ITERATIONS_TEST) :
-        r = (A@x) - b #NON devi prendere A ma P - N
-        x = x + (getInvertedDiagonalMatrix(A) @ r)
-        k += 1
-        if(checkError(A, x, b, tol)) :
-            return x
-    return None #se ritorna none vuol dire che non converge
-        """
-
+            if(checkError(A, x, b, tol)) :
+                print("iterazione ", i, " ha trovato la soluzione: ", x)
+                return x
+        return None #se ritorna none vuol dire che non converge
+       
 def getDiagonalMatrix(A) :
     B = numpy.matrix.copy(A) #TODO: controlla se si può
     for i in range(len(B)) :
