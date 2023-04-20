@@ -11,3 +11,8 @@ def isDiagonalAllNonZero(A) :
 #TODO: metodo per calcolare l'errore relativo (e = x - x^k)
 def relError(e) :
     return 0
+
+#TODO: ritorna true se nella diagonale è presente il valore maggiore della matrice in termini assoluti
+#Serve per dimostrarne la convergenza prima di applicare il metodo risolutivo d Jacobi
+def isDiagonallyDominant(A) :
+    return False
