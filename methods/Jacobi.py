@@ -1,6 +1,10 @@
 import numpy
 import utility.Constants as constants
 
+### TODO: controlla efficienza
+### TODO: commenta funzioni
+### TODO: se possono essere utili queste funzioni da altre parti spostale nell'utility
+
 # @ è un operatore che serve per la moltiplicazione matriciale
 def jacobi(A, b, x, tol) :
         for i in range(constants.MAX_ITERATIONS_TEST) :
