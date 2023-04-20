@@ -4,6 +4,7 @@ import utility.Constants as constants
 ### TODO: controlla efficienza
 ### TODO: commenta funzioni
 ### TODO: se possono essere utili queste funzioni da altre parti spostale nell'utility
+### TODO: le lettere maiuscole sono costanti
 
 # @ è un operatore che serve per la moltiplicazione matriciale
 def jacobi(A, b, x, tol) :
@@ -11,6 +12,7 @@ def jacobi(A, b, x, tol) :
             D = getInvertedDiagonalMatrix(A)
             R = getZeroDiagMatrix(A)
             x = ((D @ R) @ x) + (D @ b)
+            print("x: ", x)
             if(checkCurrentSolution(A, x, b, tol)) :
                 print("iterazione ", i, " ha trovato la soluzione: ", x)
                 return x
