@@ -5,11 +5,8 @@ import numpy
 def gauss_seidel(A, b, x, tol) :
     p = getTriangolarInf(A)
     r = b - (A @ x)
-    print("r: ", r)
     y = forwardSubstitution(p, b)
-    print("y: ", y)
-    x = x + y
-    print("x: ", x)
+    x = 1
     return x
 
 def getTriangolarInf(A) :
@@ -29,11 +26,12 @@ def getTriangolarSup(A) :
     return B
 
 def forwardSubstitution(A, b) :
+    x = []
     if(A[0][0] == 0) :
         return ValueError
-    x = b/A[0][0]
-    for i in range(2, len(A)) :
+    x.append(b[0]/A[0][0])
+    for i in range(1, len(A)) :
         if(A[i][i] == 0) :
             ValueError
-        x = (b[i]-(A[i][i]*x))/A[i][i]
-    return x
+        x.append((b[i]-(A[i][:i] @ x[:i]))/A[i][i])
+    return numpy.array(x)
