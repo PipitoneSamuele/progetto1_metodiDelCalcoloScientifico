@@ -1,13 +1,21 @@
 import numpy
+import utility.Constants as constants
+import utility.Matrix_operations as mo
 
-#https://atozmath.com/example/CONM/GaussEli.aspx?q=GS2&q1=E1
+#TODO: ripulisci codice
+#TODO: sposta funzioni nell'utility se servono
+#TODO: 
 
 def gauss_seidel(A, b, x, tol) :
-    p = getTriangolarInf(A)
-    r = b - (A @ x)
-    y = forwardSubstitution(p, b)
-    x = 1
-    return x
+    for i in range(constants.MAX_ITERATIONS_TEST) :
+        p = getTriangolarInf(A)
+        r = b - (A @ x)
+        y = forwardSubstitution(p, r)
+        x = x + y
+        print(x)
+        if(mo.checkCurrentSolution(A, x, b, tol)) :
+            return x
+    return None
 
 def getTriangolarInf(A) :
     B = numpy.matrix.copy(A) #TODO: controlla se si può

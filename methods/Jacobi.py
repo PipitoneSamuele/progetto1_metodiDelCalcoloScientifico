@@ -1,5 +1,6 @@
 import numpy
 import utility.Constants as constants
+import utility.Matrix_operations as mo
 
 ### TODO: controlla efficienza
 ### TODO: commenta funzioni
@@ -13,7 +14,7 @@ def jacobi(A, b, x, tol) :
             R = getZeroDiagMatrix(A)
             x = ((D @ R) @ x) + (D @ b)
             print("x: ", x)
-            if(checkCurrentSolution(A, x, b, tol)) :
+            if(mo.checkCurrentSolution(A, x, b, tol)) :
                 print("iterazione ", i, " ha trovato la soluzione: ", x)
                 return x
         return None #se ritorna none vuol dire che non converge
@@ -38,9 +39,3 @@ def getZeroDiagMatrix(A) :
             else :
                 B[i][j] = -B[i][j]
     return B
-
-def checkCurrentSolution(A, x, b, tol) :
-    if(numpy.divide(numpy.linalg.norm((A@x) - b), numpy.linalg.norm(b)) < tol) :
-        return True
-    else :
-        return False
