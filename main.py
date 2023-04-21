@@ -1,5 +1,6 @@
 from scipy.io import mmread
 import utility.Constants as constants
+import methods.Jacobi as jacobi
 
 a = mmread("progetto1_metodiDelCalcoloScientifico\\resources\data\spa1.mtx")
 
@@ -7,12 +8,13 @@ a = mmread("progetto1_metodiDelCalcoloScientifico\\resources\data\spa1.mtx")
 x = [1] * len(a.A) 
 
 # b: vettore della soluzione del sistema
-b = a * x 
+b = a @ x 
 
 # tol: lista delle tolleranze con il quale testare i vari metodi
 tol = constants.TOL
 
 # calcolo delle soluzioni approssimate TODO
+jacobi.jacobi(a, b, x, constants.TOL_TEST)
 
 # calcolo degli errori relativi, numero iterazioni e tempo di calcolo TODO
 
