@@ -9,14 +9,12 @@ def gradiente(A, b, x, tol) :
     Permette un massimo di 20000 iterazioni di esso, oppure quando si raggiunge una tolleranza pari a tol.
     Output: x: vettore dei risultati.
     """
+    #TODO: aggiungere limite per tol
     for i in range(constants.MAX_ITERATIONS_TEST) :
         r = b - (A @ x)
-        print("A * x: ", A @ x)
         y = A @ r
         num_alpha = np.transpose(r) @ r
         den_alpha = np.transpose(r) @ y
-        print("num_alpha: ", num_alpha)
-        print("den_alpha: ", den_alpha)
         alpha = num_alpha/den_alpha
         x = x + (alpha * r)
     return x
