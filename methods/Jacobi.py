@@ -1,4 +1,5 @@
 import numpy
+import scipy.sparse as sparse
 import utility.Constants as constants
 import utility.Matrix_operations as mo
 
@@ -20,22 +21,13 @@ def jacobi(A, b, x, tol) :
         return None #se ritorna none vuol dire che non converge
        
 def getInvertedDiagonalMatrix(A) :
-    B = numpy.matrix.copy(A) #TODO: controlla se si può
-    for i in range(len(B)) :
-        for j in range(len(B[0])) :
-            if(i != j) :
-                B[i][j] = 0
-            else :
-                B[i][j] = 1/(B[i][j])
-    return B
+    diag = A.diagonal()
+    for i in range(len(diag)) :
+        diag[i] = 1/diag[i]
+    return sparse.diags(diag, 0) #NB: questa è una dia_matrix non coo_matrix
 
 #Metodo che ritorna una matrice la cui diagonale sono tutti 0 e gli altri elementi sono invertiti di segno
 def getZeroDiagMatrix(A) :
-    B = numpy.matrix.copy(A) #TODO: controlla se si può
-    for i in range(len(B)) :
-        for j in range(len(B[0])) :
-            if(i == j) :
-                B[i][j] = 0
-            else :
-                B[i][j] = -B[i][j]
-    return B
+    triu_A = sparse.triu(A, 1)
+    tril_A = sparse.tril(A, -1)
+    return triu_A + tril_A #coo_matrix
