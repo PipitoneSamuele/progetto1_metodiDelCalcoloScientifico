@@ -10,6 +10,7 @@ build = [1] * len(a.A)
 x = sparse.coo_array(build)
 
 # b: vettore della soluzione del sistema
+# TODO: controlla che il b ottenuto sia corretto
 b = a @ x.transpose()
 
 # tol: lista delle tolleranze con il quale testare i vari metodi

@@ -1,45 +1,30 @@
-import numpy
 import utility.Constants as constants
 import utility.Matrix_operations as mo
+import scipy.sparse as sparse
 
 #TODO: ripulisci codice
 #TODO: sposta funzioni nell'utility se servono
-#TODO: 
 
-def gauss_seidel(A, b, x, tol) :
+def gauss_seidel(a, b, x, tol) :
     for i in range(constants.MAX_ITERATIONS_TEST) :
-        p = getTriangolarInf(A)
-        r = b - (A @ x)
+        p = sparse.tril(a, 0)
+        r = b.transpose() - (a @ x.transpose())
         y = forwardSubstitution(p, r)
-        x = x + y
-        print(x)
-        if(mo.checkCurrentSolution(A, x, b, tol)) :
+        x = x + y.transpose()
+        if(mo.checkSparseSolution(a, x, b, tol)) :
+            print("iterazione ", i, " ha trovato la soluzione: ", x)
             return x
     return None
 
-def getTriangolarInf(A) :
-    B = numpy.matrix.copy(A) #TODO: controlla se si può
-    for i in range(len(B)) :
-        for j in range(len(B[0])) :
-            if(i < j) :
-                B[i][j] = 0
-    return B
+#inefficiente O(n^2)
+def forwardSubstitution(a, b) :
+    a = a.todense()
+    b = b.todense()
+    x = [0] * len(b) 
 
-def getTriangolarSup(A) :
-    B = numpy.matrix.copy(A) #TODO: controlla se si può
-    for i in range(len(B)) :
-        for j in range(len(B[0])) :
-            if(i >= j) :
-                B[i][j] = 0
-    return B
-
-def forwardSubstitution(A, b) :
-    x = []
-    if(A[0][0] == 0) :
-        return ValueError
-    x.append(b[0]/A[0][0])
-    for i in range(1, len(A)) :
-        if(A[i][i] == 0) :
-            ValueError
-        x.append((b[i]-(A[i][:i] @ x[:i]))/A[i][i])
-    return numpy.array(x)
+    for i in range(len(b)):
+        x[i] = b[i]
+        for j in range(0, i) :
+            x[i] -= a[i, j] * x[j]
+        x[i] /= a[i, i]
+    return sparse.coo_array(x)
