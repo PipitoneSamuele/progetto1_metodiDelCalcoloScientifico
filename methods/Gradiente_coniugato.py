@@ -1,7 +1,5 @@
-import numpy as np
 import utility.Constants as constants
-
-#matrice A deve essere simmetrica e definita positiva
+import utility.Matrix_operations as mo
 
 def gradiente_coniugato(A, b, x, d, tol) :
     """Input: A (matrice), b (vettore), x (vettore), d(vettore), tol (numero)
@@ -9,15 +7,20 @@ def gradiente_coniugato(A, b, x, d, tol) :
     Permette un massimo di 20000 iterazioni di esso, oppure quando si raggiunge una tolleranza pari a tol.
     Output: x: vettore dei risultati.
     """
-    #TODO: aggiungere limite per tol
+    x = x.transpose()
+    b = b.transpose()
+    d = d.transpose()
     for i in range(constants.MAX_ITERATIONS_TEST) :
-        r = b - (A @ x)
+        r = b - A @ x
         y = A @ d
         z = A @ r
-        alpha = (d * r) / (d * y)
-        x = x + (alpha * d)
+        alpha = d.dot(r) / d.dot(y)
+        x = x + alpha * d
         r = b - A @ x
         w = A @ r
-        beta = (d * w) / (d * y)
+        beta = d.dot(w) / d.dot(y)
         d = r - beta * d
-    return x
+        if(mo.checkSparseSolution(A, x.transpose(), b.transpose(), tol)) :
+                print("iterazione ", i, " ha trovato la soluzione: ", x)
+                return x
+    return None #se ritorna none vuol dire che non converge
