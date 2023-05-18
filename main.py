@@ -1,9 +1,11 @@
 from scipy.io import mmread
 import utility.Constants as constants
 import methods.Jacobi as jacobi
+import methods.Gradiente as grad
 import scipy.sparse as sparse
 
-a = mmread("progetto1_metodiDelCalcoloScientifico\\resources\data\spa1.mtx")
+#a = mmread("progetto1_metodiDelCalcoloScientifico\\resources\data\spa1.mtx")
+a = mmread("resources\data\spa1.mtx")
 
 # x: vettore della soluzione esatta inizializzato a tutti 1
 build = [1] * len(a.A)
@@ -17,7 +19,7 @@ b = a @ x.transpose()
 tol = constants.TOL
 
 # calcolo delle soluzioni approssimate TODO
-jacobi.jacobi(a, b.transpose(), x, constants.TOL_TEST)
+#jacobi.jacobi(a, b.transpose(), x, constants.TOL_TEST)
 
+grad.gradiente(a, b.transpose(), x, constants.TOL_TEST)
 # calcolo degli errori relativi, numero iterazioni e tempo di calcolo TODO
-print(x)

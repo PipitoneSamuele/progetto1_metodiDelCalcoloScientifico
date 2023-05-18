@@ -16,4 +16,4 @@ x = sparse.coo_array([1.0, 1.0, 1.0])
 #jacobi.jacobi(A, b, x, 0.001)
 
 grad.gradiente(A, b, x, 0.001)
-#grad_con.gradiente_coniugato(A, b, x, x, 0.001)
+#grad_con.gradiente_coniugato(A, b, x, 0.001) # direction default = r
