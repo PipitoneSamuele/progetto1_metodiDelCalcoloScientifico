@@ -21,7 +21,7 @@ def jacobi(a, b, x, tol) :
             x = intermedio + c
             x = x.transpose()
             if(mo.checkSparseSolution(a, x, b, tol)) :
-                print("iterazione ", i, " ha trovato la soluzione: ", x)
+                print("iterazione ", i+1, " ha trovato la soluzione: ", x)
                 return x
         return None #se ritorna none vuol dire che non converge
 
