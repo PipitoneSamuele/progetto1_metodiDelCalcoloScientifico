@@ -1,4 +1,3 @@
-import numpy
 import scipy.sparse as sparse
 import scipy.sparse.linalg as linalg
 import utility.Constants as constants
@@ -11,12 +10,12 @@ import utility.Matrix_operations as mo
 
 # @ è un operatore che serve per la moltiplicazione matriciale
 def jacobi(a, b, x, tol) :
-        for i in range(constants.MAX_ITERATIONS_TEST) :
+        for i in range(constants.MAX_ITERATIONS) :
             d = getInvertedDiagonalMatrix(a)
             r = getZeroDiagMatrix(a)
             r = -r
             t = d.dot(r)
-            c = d.dot(b.transpose())
+            c = d.dot(b)
             intermedio = t.dot(x.transpose())
             x = intermedio + c
             x = x.transpose()

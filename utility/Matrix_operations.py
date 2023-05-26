@@ -18,7 +18,7 @@ def checkCurrentSolution(A, x, b, tol) :
 
 #TODO: metodo per calcolare l'errore relativo di matrici sparse
 def checkSparseSolution(A, x, b, tol) : 
-    residuo = A.dot(x.transpose()) - b.transpose()
+    residuo = A.dot(x.transpose()) - b
     value = linalg.norm(residuo) / (linalg.norm(b))
     print("value", value)
     if(value < tol) :
