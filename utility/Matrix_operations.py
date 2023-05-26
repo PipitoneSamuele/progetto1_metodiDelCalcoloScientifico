@@ -20,7 +20,7 @@ def checkCurrentSolution(A, x, b, tol) :
 def checkSparseSolution(A, x, b, tol) : 
     residuo = A.dot(x.transpose()) - b
     value = linalg.norm(residuo) / (linalg.norm(b))
-    print("value", value)
+    print("tollerance check: ", value)
     if(value < tol) :
          return True
     else :
@@ -30,3 +30,6 @@ def checkSparseSolution(A, x, b, tol) :
 #Serve per dimostrarne la convergenza prima di applicare il metodo risolutivo d Jacobi
 def isDiagonallyDominant(A) :
     return False
+
+def calculateRelativeError(x_approx, x_solution) :
+    return linalg.norm(x_approx - x_solution) / linalg.norm(x_solution)
