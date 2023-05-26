@@ -38,15 +38,15 @@ def calculateRelativeError(x_approx, x_solution) :
 #funziona
 def forward_substitution(L, b) :
     L = sparse.coo_matrix(L).tocsr().todense()
-    b = b.toarray()[0]
+    b = b.toarray()
     n = L.shape[0]
     x = [0.0] * n
-    x[0] = b[0] / L[0,0]
+    x[0] = b[0,0] / L[0,0]
 
     for i in range(1, n) :
         sumJ = 0.0
         for j in range(n) : 
             sumJ += L[i,j] * x[j]
-        x[i] = (b[i] - sumJ) / L[i,i]
-    return x
+        x[i] = (b[i, 0] - sumJ) / L[i,i]
+    return sparse.coo_array(x)
       

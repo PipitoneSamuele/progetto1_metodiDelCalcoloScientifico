@@ -8,13 +8,10 @@ import scipy.sparse as sparse
 
 def gauss_seidel(a, b, x, tol) :
     for i in range(constants.MAX_ITERATIONS_TEST) :
+        r = b - (a @ x.transpose())
         L = sparse.tril(a, 0)
-        U = sparse.triu(a, 1)
-        L = sparse.linalg.inv(L.tocsc())
-        T = -L @ U
-        C = L @ b
-        x = T@x.transpose() + C
-        x = x.transpose()
+        y = mo.forward_substitution(L, r)
+        x = x + y
         if(mo.checkSparseSolution(a, x, b, tol)) :
             print("iterazione ", i+1, " ha trovato la soluzione: ", x)
             return x
