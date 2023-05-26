@@ -8,12 +8,10 @@ import utility.Matrix_operations as mo
 ### TODO: se possono essere utili queste funzioni da altre parti spostale nell'utility
 ### TODO: le lettere maiuscole sono costanti
 
-# @ è un operatore che serve per la moltiplicazione matriciale
 def jacobi(a, b, x, tol) :
         for i in range(constants.MAX_ITERATIONS) :
             d = getInvertedDiagonalMatrix(a)
-            r = getZeroDiagMatrix(a)
-            r = -r
+            r = -getZeroDiagMatrix(a)
             t = d.dot(r)
             c = d.dot(b)
             intermedio = t.dot(x.transpose())
@@ -22,7 +20,7 @@ def jacobi(a, b, x, tol) :
             if(mo.checkSparseSolution(a, x, b, tol)) :
                 print("iterazione ", i+1, " ha trovato la soluzione: ", x)
                 return x
-        return None #se ritorna none vuol dire che non converge
+        return None
 
 def getInvertedDiagonalMatrix(A) :
     diag = A.diagonal()
@@ -34,4 +32,4 @@ def getInvertedDiagonalMatrix(A) :
 def getZeroDiagMatrix(A) :
     triu_A = sparse.triu(A, 1)
     tril_A = sparse.tril(A, -1)
-    return triu_A + tril_A #coo_matrix
+    return triu_A + tril_A 
