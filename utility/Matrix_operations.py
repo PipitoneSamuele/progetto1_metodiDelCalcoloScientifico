@@ -21,7 +21,7 @@ def checkCurrentSolution(A, x, b, tol) :
 def checkSparseSolution(A, x, b, tol) : 
     residuo = A.dot(x.transpose()) - b
     value = linalg.norm(residuo) / (linalg.norm(b))
-    print("tollerance check: ", value)
+    print("tolerance check: ", value)
     if(value < tol) :
          return True
     else :
