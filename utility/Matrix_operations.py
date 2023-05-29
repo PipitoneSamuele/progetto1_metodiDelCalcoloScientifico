@@ -38,7 +38,7 @@ def checkSparseSolutionResidual(residuo, b, tol) :
     param tol: Numero razionale, idealmente piccolo, che indica quando il metodo si deve arrestare
     """
     value = linalg.norm(residuo) / (linalg.norm(b))
-    print("tollerance check: ", value)
+    #print("tollerance check: ", value)
     if(value < tol) :
          return True
     else :
@@ -57,24 +57,3 @@ def calculateRelativeError(x_approx, x_solution) :
     param x_solution: Vettore soluzione del sistema lineare
     """
     return linalg.norm(x_approx - x_solution) / linalg.norm(x_solution)
-
-def forward_substitution(l, b) :
-    """
-    Metodo utilizzato per la risoluzione di sistemi con matrice triangolare inferiore
-
-    param l: Matrice triangolare inferiore
-    param b: Vettore di termini noti
-    """
-    l = sparse.coo_matrix(l).tocsr().todense()
-    b = b.toarray()
-    n = l.shape[0]
-    x = [0.0] * n
-    x[0] = b[0,0] / l[0,0]
-
-    for i in range(1, n) :
-        sumJ = 0.0
-        for j in range(n) : 
-            sumJ += l[i,j] * x[j]
-        x[i] = (b[i, 0] - sumJ) / l[i,i]
-    return sparse.coo_array(x)
-      

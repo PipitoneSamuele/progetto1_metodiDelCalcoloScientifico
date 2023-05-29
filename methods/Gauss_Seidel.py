@@ -14,9 +14,10 @@ def gauss_seidel(a, b, x, tol) :
     for i in range(constants.MAX_ITERATIONS) :
         r = b - (a @ x.transpose())
         l = sparse.tril(a, 0)
-        y = mo.forward_substitution(l, r)
-        x = x + y
+        y = sparse.linalg.spsolve_triangular(l.tocsr(), r.toarray())
+        y = sparse.coo_array(y)
+        x = x + y.transpose()
         if(mo.checkSparseSolutionResidual(r, b, tol)) :
-            print("iterazione ", i+1, " ha trovato la soluzione: ", x)
+            print("iterazione ", i+1, "del metodo Gauss_Seidel, ha trovato la soluzione:\n", x, "\n")
             return x
     return None

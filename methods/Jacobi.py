@@ -18,7 +18,7 @@ def jacobi(a, b, x, tol) :
         x = x + (d @ residuo)
         x = x.transpose()
         if(mo.checkSparseSolutionResidual(residuo, b, tol)) :
-            print("iterazione ", i+1, " ha trovato la soluzione: ", x)
+            print("iterazione ", i+1, "del metodo Jacobi, ha trovato la soluzione:\n", x, "\n")
             return x
     return None
 

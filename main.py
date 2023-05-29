@@ -7,7 +7,7 @@ import methods.Gradiente_coniugato as grad_conj
 import scipy.sparse as sparse
 import utility.Matrix_operations as op
 
-a = mmread("resources/data/spa2.mtx")
+a = mmread("resources/data/spa1.mtx")
 
 # x_soluzione: vettore della soluzione esatta inizializzato a tutti 1
 x_soluzione = sparse.coo_array([1.0] * len(a.A))
@@ -21,7 +21,7 @@ tol = constants.TOL
 
 # calcolo delle soluzioni approssimate TODO
 sol_jacobi = jacobi_solution = ja.jacobi(a, b, x_test, constants.TOL[3])
-sol_gauss = gauss_solution = gs.gauss_seidel(a, b, x_test, constants.TOL[0])
+sol_gauss = gauss_solution = gs.gauss_seidel(a, b, x_test, constants.TOL[3])
 #grad.gradiente(a, b, x_test, constants.TOL[0])
 #grad_conj.gradiente_coniugato(a, b, x_test, constants.TOL[0])
 
