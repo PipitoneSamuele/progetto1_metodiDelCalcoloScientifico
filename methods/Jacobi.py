@@ -1,35 +1,46 @@
 import scipy.sparse as sparse
-import scipy.sparse.linalg as linalg
 import utility.Constants as constants
 import utility.Matrix_operations as mo
 
-### TODO: controlla efficienza
-### TODO: commenta funzioni
-### TODO: se possono essere utili queste funzioni da altre parti spostale nell'utility
-### TODO: le lettere maiuscole sono costanti
-
 def jacobi(a, b, x, tol) :
-        for i in range(constants.MAX_ITERATIONS) :
-            d = getInvertedDiagonalMatrix(a)
-            r = -getZeroDiagMatrix(a)
-            t = d.dot(r)
-            c = d.dot(b)
-            intermedio = t.dot(x.transpose())
-            x = intermedio + c
-            x = x.transpose()
-            if(mo.checkSparseSolution(a, x, b, tol)) :
-                print("iterazione ", i+1, " ha trovato la soluzione: ", x)
-                return x
-        return None
+    """
+    Metodo iterativo per la risoluzione di sistemi lineari
 
-def getInvertedDiagonalMatrix(A) :
-    diag = A.diagonal()
+    param a: Matrice dei coefficienti del sistema lineare
+    param b: Vettore dei termini noti
+    param x: Vettore dei coefficienti delle incognite
+    param tol: Numero razionale, idealmente piccolo, che indica quando il metodo si deve arrestare
+    """
+    for i in range(constants.MAX_ITERATIONS) :
+        d = getInvertedDiagonalMatrix(a)
+        r = -getZeroDiagMatrix(a)
+        t = d.dot(r)
+        c = d.dot(b)
+        intermedio = t.dot(x.transpose())
+        x = intermedio + c
+        x = x.transpose()
+        if(mo.checkSparseSolution(a, x, b, tol)) :
+            print("iterazione ", i+1, " ha trovato la soluzione: ", x)
+            return x
+    return None
+
+def getInvertedDiagonalMatrix(a) :
+    """
+    Ritorna la matrice con solo la diagonale inversa nella forma 1/Aii
+
+    param a: Matrice di input
+    """
+    diag = a.diagonal()
     for i in range(len(diag)) :
         diag[i] = 1/diag[i]
-    return sparse.diags(diag, 0) #NB: questa è una dia_matrix non coo_matrix
+    return sparse.diags(diag, 0)
 
-#Metodo che ritorna una matrice la cui diagonale sono tutti 0 e gli altri elementi sono invertiti di segno
-def getZeroDiagMatrix(A) :
-    triu_A = sparse.triu(A, 1)
-    tril_A = sparse.tril(A, -1)
+def getZeroDiagMatrix(a) :
+    """
+    Ritorna la matrice con la diagonale posta a 0
+
+    param a: Matrice di input
+    """
+    triu_A = sparse.triu(a, 1)
+    tril_A = sparse.tril(a, -1)
     return triu_A + tril_A 
