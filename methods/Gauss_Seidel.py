@@ -16,7 +16,7 @@ def gauss_seidel(a, b, x, tol) :
         l = sparse.tril(a, 0)
         y = mo.forward_substitution(l, r)
         x = x + y
-        if(mo.checkSparseSolution(a, x, b, tol)) :
+        if(mo.checkSparseSolutionResidual(r, b, tol)) :
             print("iterazione ", i+1, " ha trovato la soluzione: ", x)
             return x
     return None

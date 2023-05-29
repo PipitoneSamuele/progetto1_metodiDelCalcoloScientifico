@@ -26,6 +26,23 @@ def checkSparseSolution(A, x, b, tol) :
          return True
     else :
          return False
+    
+def checkSparseSolutionResidual(residuo, b, tol) :
+    """ 
+    Metodo usato per verificare la precisione della x corrente, passando il residuo
+    calcolato nel metodo risparmiamo operazioni macchina
+
+    param a: Matrice dei coefficienti del sistema lineare
+    param b: Vettore dei termini noti
+    param x: Vettore dei coefficienti delle incognite
+    param tol: Numero razionale, idealmente piccolo, che indica quando il metodo si deve arrestare
+    """
+    value = linalg.norm(residuo) / (linalg.norm(b))
+    print("tollerance check: ", value)
+    if(value < tol) :
+         return True
+    else :
+         return False
 
 #TODO: ritorna true se nella diagonale è presente il valore maggiore della matrice in termini assoluti
 #Serve per dimostrarne la convergenza prima di applicare il metodo risolutivo d Jacobi

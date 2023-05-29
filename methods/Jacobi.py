@@ -13,13 +13,11 @@ def jacobi(a, b, x, tol) :
     """
     for i in range(constants.MAX_ITERATIONS) :
         d = getInvertedDiagonalMatrix(a)
-        r = -getZeroDiagMatrix(a)
-        t = d.dot(r)
-        c = d.dot(b)
-        intermedio = t.dot(x.transpose())
-        x = intermedio + c
         x = x.transpose()
-        if(mo.checkSparseSolution(a, x, b, tol)) :
+        residuo = b - (a @ x) 
+        x = x + (d @ residuo)
+        x = x.transpose()
+        if(mo.checkSparseSolutionResidual(residuo, b, tol)) :
             print("iterazione ", i+1, " ha trovato la soluzione: ", x)
             return x
     return None
