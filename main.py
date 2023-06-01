@@ -9,8 +9,16 @@ import utility.Matrix_operations as op
 import utility.Matrix_checks as check
 import sys
 import time
+import os
 
-matrixString = input("Insert the name of the file containing the input matrix: ")
+files = [f for f in os.listdir("resources/data") if os.path.isfile(os.path.join("resources/data", f))]
+
+for file in files :
+    file = file[:len(file)-4]
+    print(file)
+
+matrixString = input("Insert the name of the file containing the input matrix (from the above list): ")
+
 a = mmread("resources/data/" + matrixString + ".mtx")
 
 t0 = time.time()

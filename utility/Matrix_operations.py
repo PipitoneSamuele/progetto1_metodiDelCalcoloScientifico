@@ -44,11 +44,6 @@ def checkSparseSolutionResidual(residuo, b, tol) :
     else :
          return False
 
-#TODO: ritorna true se nella diagonale è presente il valore maggiore della matrice in termini assoluti
-#Serve per dimostrarne la convergenza prima di applicare il metodo risolutivo d Jacobi
-def isDiagonallyDominant(A) :
-    return False
-
 def calculateRelativeError(x_approx, x_solution) :
     """
     Metodo che riporta la distanza numerica tra la soluzione approssimata e la soluzione reale
