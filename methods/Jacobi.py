@@ -32,13 +32,3 @@ def getInvertedDiagonalMatrix(a) :
     for i in range(len(diag)) :
         diag[i] = 1/diag[i]
     return sparse.diags(diag, 0)
-
-def getZeroDiagMatrix(a) :
-    """
-    Ritorna la matrice con la diagonale posta a 0
-
-    param a: Matrice di input
-    """
-    triu_A = sparse.triu(a, 1)
-    tril_A = sparse.tril(a, -1)
-    return triu_A + tril_A 

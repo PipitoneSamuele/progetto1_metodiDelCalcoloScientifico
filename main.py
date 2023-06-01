@@ -6,31 +6,46 @@ import methods.Gradiente as grad
 import methods.Gradiente_coniugato as grad_conj
 import scipy.sparse as sparse
 import utility.Matrix_operations as op
+import utility.Matrix_checks as check
+import sys
+import time
 
-a = mmread("resources/data/spa1.mtx")
+matrixString = input("Insert the name of the file containing the input matrix: ")
+a = mmread("resources/data/" + matrixString + ".mtx")
 
-# x_soluzione: vettore della soluzione esatta inizializzato a tutti 1
-x_soluzione = sparse.coo_array([1.0] * len(a.A))
-x_test = sparse.coo_array([0.0] * len(a.A))
+t0 = time.time()
 
-# b: vettore della soluzione del sistema
-b = a @ x_soluzione.transpose()
+a_dense = a.toarray()
+if(not check.isCholeskyDecomposable(a_dense)) :
+    sys.exit("Matrix is not symmetric positive")
 
-# tol: lista delle tolleranze con il quale testare i vari metodi
+t_check = time.time()
+print("Check time: ", t_check - t0)
+
+x_solution = sparse.coo_array([1.0] * len(a.A))
+x_approx = sparse.coo_array([0.0] * len(a.A))
+
+b = a @ x_solution.transpose()
+
 tol = constants.TOL
 
 # calcolo delle soluzioni approssimate TODO
-sol_jacobi = jacobi_solution = ja.jacobi(a, b, x_test, constants.TOL[3])
-sol_gauss = gauss_solution = gs.gauss_seidel(a, b, x_test, constants.TOL[3])
+sol_jacobi = jacobi_solution = ja.jacobi(a, b, x_approx, constants.TOL[0])
+t_jacobi = time.time()
+print("Jacobi time: ", t_jacobi - t_check)
+
+sol_gauss = gauss_solution = gs.gauss_seidel(a, b, x_approx, constants.TOL[0])
+t_gauss = time.time()
+print("Gauss Seidel time: ", t_gauss - t_jacobi)
 #grad.gradiente(a, b, x_test, constants.TOL[0])
 #grad_conj.gradiente_coniugato(a, b, x_test, constants.TOL[0])
 
 # calcolo degli errori relativi, numero iterazioni e tempo di calcolo TODO
 if(sol_jacobi != None) :
-    print("relative error for Jacobi: ", op.calculateRelativeError(sol_jacobi, x_soluzione))
+    print("Relative error for Jacobi: ", op.calculateRelativeError(sol_jacobi, x_solution))
 else :
     print("No solution found from Jacobi iterations")
 if(sol_gauss != None) :
-    print("relative error for Gauss_Seidel: ", op.calculateRelativeError(sol_gauss, x_soluzione))
+    print("Relative error for Gauss_Seidel: ", op.calculateRelativeError(sol_gauss, x_solution))
 else :
     print("No solution found from Gauss iterations")
