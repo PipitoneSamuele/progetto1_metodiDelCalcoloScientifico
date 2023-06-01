@@ -1,23 +1,10 @@
 from scipy.io import mmread
-import utility.Constants as constants
-import methods.Jacobi as ja
-import methods.Gauss_Seidel as gs
-import methods.Gradiente as grad
-import methods.Gradiente_coniugato as grad_conj
 import scipy.sparse as sparse
-import utility.Matrix_operations as op
-import utility.Matrix_checks as check
-import sys
-import time
-import os
+import sys, time
+from utility import IOUtility as io, Constants as constants, Matrix_checks as check
+from methods import Jacobi as ja, Gauss_Seidel as gs, Gradiente as grad, Gradiente_coniugato as grad_conj
 
-files = [f for f in os.listdir("resources/data") if os.path.isfile(os.path.join("resources/data", f))]
-
-for file in files :
-    file = file[:len(file)-4]
-    print(file)
-
-matrixString = input("Insert the name of the file containing the input matrix (from the above list): ")
+matrixString = io.showFiles()
 
 a = mmread("resources/data/" + matrixString + ".mtx")
 
@@ -27,6 +14,8 @@ a_dense = a.toarray()
 if(not check.isCholeskyDecomposable(a_dense)) :
     sys.exit("Matrix is not symmetric positive")
 
+tol = io.showTollerance()
+
 t_check = time.time()
 print("Check time: ", t_check - t0)
 
@@ -35,39 +24,23 @@ x_approx = sparse.coo_array([0.0] * len(a.A))
 
 b = a @ x_solution.transpose()
 
-tol = constants.TOL
-
-# calcolo delle soluzioni approssimate TODO
-sol_jacobi = jacobi_solution = ja.jacobi(a, b, x_approx, constants.TOL[0])
+sol_jacobi = ja.jacobi(a, b, x_approx, tol)
 t_jacobi = time.time()
 print("Jacobi time: ", t_jacobi - t_check)
 
-sol_gauss = gauss_solution = gs.gauss_seidel(a, b, x_approx, constants.TOL[0])
+sol_gauss = gs.gauss_seidel(a, b, x_approx, tol)
 t_gauss = time.time()
 print("Gauss Seidel time: ", t_gauss - t_jacobi)
 
-sol_gradient = gradient_solution = grad.gradiente(a, b, x_approx, constants.TOL[0])
+sol_gradient = grad.gradiente(a, b, x_approx, tol)
 t_gradient = time.time()
 print("Gradient time: ", t_gradient - t_gauss)
 
-sol_conj_gradient = conj_gradient_solution = grad_conj.gradiente_coniugato(a, b, x_approx, constants.TOL[0])
+sol_conj_gradient = grad_conj.gradiente_coniugato(a, b, x_approx, tol)
 t_conj_gradient = time.time()
 print("Conjugate Gradient time: ", t_conj_gradient - t_gradient)
 
-# calcolo degli errori relativi, numero iterazioni e tempo di calcolo TODO
-if(sol_jacobi != None) :
-    print("Relative error for Jacobi: ", op.calculateRelativeError(sol_jacobi, x_solution))
-else :
-    print("No solution found from Jacobi iterations")
-if(sol_gauss != None) :
-    print("Relative error for Gauss_Seidel: ", op.calculateRelativeError(sol_gauss, x_solution))
-else :
-    print("No solution found from Gauss iterations")
-if(sol_gradient != None) :
-    print("Relative error for Gradient: ", op.calculateRelativeError(sol_gradient.transpose(), x_solution))
-else :
-    print("No solution found from Gradient iterations")
-if(sol_conj_gradient != None) :
-    print("Relative error for Conjugate Gradient: ", op.calculateRelativeError(sol_conj_gradient.transpose(), x_solution))
-else :
-    print("No solution found from Conjugate Gradient iterations")
+io.relativeErrorCheck(sol_jacobi, x_solution, 1)
+io.relativeErrorCheck(sol_gauss, x_solution, 2)
+io.relativeErrorCheck(sol_gradient.transpose(), x_solution, 3)
+io.relativeErrorCheck(sol_conj_gradient.transpose(), x_solution, 4)

@@ -1,9 +1,12 @@
 import numpy
 import scipy.sparse.linalg as linalg
-import scipy.sparse as sparse
 
-#controlla se gli elementi diagonali della matrice A in input sono tutti diversi da zero
 def isDiagonalAllNonZero(A) :
+    """
+    Controlla se gli elementi diagonali della matrice A in input sono tutti diversi da zero
+
+    param a: Matrice da controllare
+    """
     diagonal = numpy.diagonal(A)
     for x in diagonal :
         if(x == 0) :
@@ -21,7 +24,6 @@ def checkSparseSolution(A, x, b, tol) :
     """
     residuo = A.dot(x.transpose()) - b
     value = linalg.norm(residuo) / (linalg.norm(b))
-    print("tollerance check: ", value)
     if(value < tol) :
          return True
     else :
