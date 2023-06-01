@@ -45,8 +45,14 @@ print("Jacobi time: ", t_jacobi - t_check)
 sol_gauss = gauss_solution = gs.gauss_seidel(a, b, x_approx, constants.TOL[0])
 t_gauss = time.time()
 print("Gauss Seidel time: ", t_gauss - t_jacobi)
-#grad.gradiente(a, b, x_test, constants.TOL[0])
-#grad_conj.gradiente_coniugato(a, b, x_test, constants.TOL[0])
+
+sol_gradient = gradient_solution = grad.gradiente(a, b, x_approx, constants.TOL[0])
+t_gradient = time.time()
+print("Gradient time: ", t_gradient - t_gauss)
+
+sol_conj_gradient = conj_gradient_solution = grad_conj.gradiente_coniugato(a, b, x_approx, constants.TOL[0])
+t_conj_gradient = time.time()
+print("Conjugate Gradient time: ", t_conj_gradient - t_gradient)
 
 # calcolo degli errori relativi, numero iterazioni e tempo di calcolo TODO
 if(sol_jacobi != None) :
@@ -57,3 +63,11 @@ if(sol_gauss != None) :
     print("Relative error for Gauss_Seidel: ", op.calculateRelativeError(sol_gauss, x_solution))
 else :
     print("No solution found from Gauss iterations")
+if(sol_gradient != None) :
+    print("Relative error for Gradient: ", op.calculateRelativeError(sol_gradient.transpose(), x_solution))
+else :
+    print("No solution found from Gradient iterations")
+if(sol_conj_gradient != None) :
+    print("Relative error for Conjugate Gradient: ", op.calculateRelativeError(sol_conj_gradient.transpose(), x_solution))
+else :
+    print("No solution found from Conjugate Gradient iterations")
