@@ -39,6 +39,11 @@ def showFiles() :
     return input("Inserisci il nome del file da prendere in input: ")
 
 def showTollerance() :
+    """
+    Metodo usato per stampare e scegliere le tolleranze 
+
+    return: La tolleranza scelta dall'utente
+    """
     for tol in const.TOL :
         print(tol)
     choice = int(input("Seleziona la tolleranza con un numero (il primo elemento è zero): "))
