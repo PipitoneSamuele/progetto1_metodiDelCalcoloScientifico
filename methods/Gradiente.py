@@ -7,7 +7,6 @@ def gradiente(A, b, x, tol) :
     Permette un massimo di 20000 iterazioni di esso, oppure quando si raggiunge una tolleranza pari a tol.
     Output: x: vettore dei risultati.
     """
-    print("--- Metodo del gradiente ---")
     x = x.transpose()
     for i in range(constants.MAX_ITERATIONS) :
         r = b - A @ x
@@ -17,6 +16,6 @@ def gradiente(A, b, x, tol) :
         alpha = num_alpha[0,0] / den_alpha[0,0]
         x = x + alpha * r
         if(mo.checkSparseSolution(A, x.transpose(), b, tol)) :
-                print("iterazione ", i+1, " ha trovato la soluzione")
+                print("iterazione ", i+1, " ha trovato soluzione")
                 return x
     return None #se ritorna none vuol dire che non converge

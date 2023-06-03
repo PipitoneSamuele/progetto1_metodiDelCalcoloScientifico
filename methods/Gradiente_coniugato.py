@@ -7,7 +7,6 @@ def gradiente_coniugato(A, b, x, tol, d=None) :
     Permette un massimo di 20000 iterazioni di esso, oppure quando si raggiunge una tolleranza pari a tol.
     Output: x: vettore dei risultati.
     """
-    print("--- Metodo del gradiente coniugato ---")
     x = x.transpose()
     if d == None:
         d = b - A @ x # se d non è specificata allora d = r
@@ -26,6 +25,6 @@ def gradiente_coniugato(A, b, x, tol, d=None) :
         beta = num_beta[0,0] / den_beta[0,0]
         d = r - beta * d
         if(mo.checkSparseSolution(A, x.transpose(), b, tol)) :
-                print("iterazione ", i+1, " ha trovato la soluzione")
+                print("iterazione ", i+1, " ha trovato soluzione")
                 return x
     return None #se ritorna none vuol dire che non converge
