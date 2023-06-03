@@ -17,6 +17,6 @@ def gradiente(A, b, x, tol) :
         alpha = num_alpha[0,0] / den_alpha[0,0]
         x = x + alpha * r
         if(mo.checkSparseSolution(A, x.transpose(), b, tol)) :
-                print("iterazione ", i, " ha trovato la soluzione: ", x)
+                print("iterazione ", i+1, " ha trovato la soluzione")
                 return x
     return None #se ritorna none vuol dire che non converge

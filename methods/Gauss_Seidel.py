@@ -18,6 +18,6 @@ def gauss_seidel(a, b, x, tol) :
         y = sparse.coo_array(y)
         x = x + y.transpose()
         if(mo.checkSparseSolutionResidual(r, b, tol)) :
-            print("iterazione ", i+1, "del metodo Gauss_Seidel, ha trovato la soluzione:\n", x, "\n")
+            print("iterazione ", i+1, "del metodo Gauss_Seidel, ha trovato la soluzione")
             return x
     return None

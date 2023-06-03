@@ -26,6 +26,6 @@ def gradiente_coniugato(A, b, x, tol, d=None) :
         beta = num_beta[0,0] / den_beta[0,0]
         d = r - beta * d
         if(mo.checkSparseSolution(A, x.transpose(), b, tol)) :
-                print("iterazione ", i, " ha trovato la soluzione: ", x)
+                print("iterazione ", i+1, " ha trovato la soluzione")
                 return x
     return None #se ritorna none vuol dire che non converge
