@@ -17,7 +17,6 @@ if(not check.isCholeskyDecomposable(a_dense)) :
 tol = io.showTollerance()
 
 t_check = time.time()
-print("Check time: ", t_check - t0)
 
 x_solution = sparse.coo_array([1.0] * len(a.A))
 x_approx = sparse.coo_array([0.0] * len(a.A))
@@ -26,19 +25,19 @@ b = a @ x_solution.transpose()
 
 sol_jacobi = ja.jacobi(a, b, x_approx, tol)
 t_jacobi = time.time()
-print("Jacobi time: ", t_jacobi - t_check)
+print("Tempo di Jacobi: ", t_jacobi - t_check)
 
 sol_gauss = gs.gauss_seidel(a, b, x_approx, tol)
 t_gauss = time.time()
-print("Gauss Seidel time: ", t_gauss - t_jacobi)
+print("Tempo di Gauss Seidel: ", t_gauss - t_jacobi)
 
 sol_gradient = grad.gradiente(a, b, x_approx, tol)
 t_gradient = time.time()
-print("Gradient time: ", t_gradient - t_gauss)
+print("Tempo del Gradiente : ", t_gradient - t_gauss)
 
 sol_conj_gradient = grad_conj.gradiente_coniugato(a, b, x_approx, tol)
 t_conj_gradient = time.time()
-print("Conjugate Gradient time: ", t_conj_gradient - t_gradient)
+print("Tempo di Gradiente coniugato: ", t_conj_gradient - t_gradient)
 
 io.relativeErrorCheck(sol_jacobi, x_solution, 1)
 io.relativeErrorCheck(sol_gauss, x_solution, 2)

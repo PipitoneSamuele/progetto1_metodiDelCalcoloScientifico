@@ -44,7 +44,9 @@ def showTollerance() :
 
     return: La tolleranza scelta dall'utente
     """
+    i = 1
     for tol in const.TOL :
-        print(tol)
-    choice = int(input("Seleziona la tolleranza con un numero (il primo elemento è zero): "))
-    return const.TOL[choice]
+        print(i, ")", tol)
+        i += 1
+    choice = int(input("Seleziona la tolleranza con un numero: "))
+    return const.TOL[choice-1]
